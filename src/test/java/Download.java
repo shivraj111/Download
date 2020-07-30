@@ -17,7 +17,7 @@ public class Download<psvm> {
 
 
     public static void main(String[] args) throws InterruptedException, MalformedURLException {
-        String downloadtext="Asus Laptop Bios";
+        String downloadtext="IBM/Lenovo laptop Bios";
         download(downloadtext);
     }
 
@@ -59,6 +59,14 @@ public class Download<psvm> {
             driver.findElement(By.xpath("//ul[@id='view-all-guides']//li/a[@title='"+downloadtext+"']")).click();
 
             Thread.sleep(500);
+            wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(By.xpath("//nav[@class='woocommerce-pagination']/ul/li"))));
+            //Just to move page till 9
+            for(int a=1; a<=8;a++)
+            {
+                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//nav[@class='woocommerce-pagination']/ul/li/a[@class='next page-numbers']")));
+                JavascriptExecutor executor = (JavascriptExecutor) driver;
+                executor.executeScript("arguments[0].click();", element);
+            }
             wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(By.xpath("//nav[@class='woocommerce-pagination']/ul/li"))));
             int pageCount = driver.findElements(By.xpath("//nav[@class='woocommerce-pagination']/ul/li")).size() - 1;
             //int pageCount =2;
